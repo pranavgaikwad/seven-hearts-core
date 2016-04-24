@@ -22,6 +22,11 @@ public class Table {
 	private static Table instance = null;
 	private TableStateChangeListener l;
 	
+	/**
+	 * default constructor with player names
+	 * @param l used to keep updated with current state of the table
+	 * @param players {@link Player} objects as an array 
+	 */
 	public Table(TableStateChangeListener l, Player...players) {
 		// TODO Auto-generated constructor stub
 		this.players = new ArrayList<Player>();
@@ -33,15 +38,27 @@ public class Table {
 		currentPlayerIndex = 0;
 	}
 	
+	/**
+	 * passes move to the next player
+	 */
 	public void incrementCurrentPlayerIndex() {
 		if(players.size() != 0)
 			currentPlayerIndex = ( currentPlayerIndex + 1 ) % players.size();
 	}
 
+	/**
+	 * returns current player
+	 * @return player {@link Player}
+	 */
 	public Player getCurrentPlayer() {
 		return players.get(currentPlayerIndex);
 	}
 	
+	/**
+	 * creates four local empty suits
+	 * used to contain cards thrown on 
+	 * the table {@link Suit}
+	 */
 	public void createLocalSuits() {
 		localSuits.add(new Suit(Suits.CLUBS));
 		localSuits.add(new Suit(Suits.DIAMONDS));
@@ -49,18 +66,32 @@ public class Table {
 		localSuits.add(new Suit(Suits.SPADES));
 	}
 	
+	/**
+	 * initiation tasks that are not allowed
+	 * to be in default constructor
+	 * @param players {@link Player} objects as an array {@link Player}
+	 */
 	public void init(Player...players) {
 		this.deck.shuffle();
 		this.deck.distributeCardsToPlayers();
 		updateTableStatus();
 	}
 	
+	/**
+	 * updates table status information
+	 * according to current status of
+	 * the game
+	 */
 	public void updateTableStatus() {
 		updateSuits();
 		updateOpenCards();
 		checkTableFull();
 	}
 	
+	/**
+	 * checks if the table has all the cards 
+	 * from {@link Deck}
+	 */
 	public void checkTableFull() {
 		if(this.players.size() == 1) 
 			l.onOnePlayerRemaining(players.get(0));
@@ -68,12 +99,21 @@ public class Table {
 			l.onTableFull(this);
 	}
 	
+	/**
+	 * addds a {@link Card} to current table
+	 * @param c card to add
+	 */
 	public void addCardToTable(Card c) {
 		cards.add(c);
 		l.onCardAddedToTable(this, c);
 		updateTableStatus();
 	}
 	
+	/**
+	 * wrapper for addCardToTable()
+	 * @param c card to add
+	 * @return status check {@link Constants} for status information
+	 */
 	public int addNewCardToTable(Card c) {
 		if(!isMoveValid(c)) return Constants.STATUS_MOVE_INVALID;
 		else {
@@ -82,6 +122,11 @@ public class Table {
 		}
 	}
 	
+	/**
+	 * checks if the current card is valid or not
+	 * @param c {@link Card} to add
+	 * @return true if valid, false otherwise
+	 */
 	public boolean isMoveValid(Card c) {
 		for(Card c1 : Table.openCards) if(c.equals(c1)) return true;
 		return false;
@@ -99,6 +144,9 @@ public class Table {
 		l.onSuitsRefreshed(this);
 	}
 	
+	/**
+	 * updates the current available moves
+	 */
 	public void updateOpenCards() {
 		Table.openCards = new ArrayList<Card>();
 		if (isEmpty())
@@ -110,10 +158,18 @@ public class Table {
 		}
 	}
 	
+	/**
+	 * returns deck registered to current table
+	 * @return {@link Deck}
+	 */
 	public Deck getDeck() {
 		return deck;
 	}
 	
+	/**
+	 * returns registered players 
+	 * @return
+	 */
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
@@ -130,22 +186,38 @@ public class Table {
 		throw new NullTableException(Constants.MESSAGE_NULL_TABLE);
 	}
 	
+	/**
+	 * wrapper for registering multiple players at a time
+	 * @param players array of {@link Player}
+	 */
 	public void registerPlayersToTable(Player...players) {
 		for(Player p:players) {
 			registerPlayerToTable(p);
 		}
 	}
 	
+	/**
+	 * registers a player with current table
+	 * @param p {@link Player} to register
+	 */
 	public void registerPlayerToTable(Player p) {
 		players.add(p);
 		l.onPlayerAddedToTable(this, p);
 	}
 	
+	/**
+	 * checks if table cannot accomodate cards anymore
+	 * @return true if full, false otherwise
+	 */
 	public boolean isTableFull() {
 		if(cards.size() == 52) return true;
 		return false;
 	}
 	
+	/**
+	 * removes player from the table
+	 * @param p {@link Player} to remove
+	 */
 	public void removePlayerFromTable(Player p) {
 		try {
 			players.remove(getPlayerIndex(p));
@@ -156,15 +228,28 @@ public class Table {
 		}
 	}
 	
+	/**
+	 * checks if the table has no cards
+	 * @return true if no cards, false otherwise
+	 */
 	public boolean isEmpty() {
 		return this.cards.isEmpty();
 	}
 	
+	/**
+	 * wrapper for getting available moves for current player
+	 * @return
+	 */
 	public ArrayList<Card> getAvailableMovesForCurrentPlayer(){
 		Player p = this.players.get(currentPlayerIndex);
 		return getAvailableMovesFor(p);
 	}
 	
+	/**
+	 * returns possible available moves for given player
+	 * @param p {@link Player} for whom moves are to be checked
+	 * @return cards as an arraylist
+	 */
 	public ArrayList<Card> getAvailableMovesFor(Player p) {
 		ArrayList<Card> playerCards = p.getCards();
 		ArrayList<Card> availableCards = new ArrayList<Card>();
@@ -174,6 +259,10 @@ public class Table {
 		return availableCards;
 	}
 	
+	/**
+	 * returns the player who currently has Seven Of Hearts
+	 * @return player {@link Player} with seven of hearts
+	 */
 	public Player whoHasSevenOfHearts() {
 		for(Player p : this.players) if(p.hasCard(new Card(Cards.SEVEN, Suits.HEARTS))) return p;
 		return null;
@@ -223,6 +312,11 @@ public class Table {
 		return status;
 	}
 	
+	/**
+	 * returns status of cards on table as a string description
+	 * @return status of cards put on table
+	 * TODO: arrange in suits
+	 */
 	public String getCardsStatus() {
 		String status = "==> cards on table : " + "\n";
 		for(Card c:cards) {

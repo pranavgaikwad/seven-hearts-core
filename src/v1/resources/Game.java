@@ -15,8 +15,18 @@ public class Game implements TableStateChangeListener, PlayerStateChangeListener
 	private Table table;
 	private Deck deck;
 
+	/**
+	 * checks if the game is finished
+	 * used in main game loop 
+	 */
 	private boolean isFinished = false;
 	
+	/**
+	 * initiate the game with player names
+	 * TODO: constructor with player objects
+	 * instead of names 
+	 * @param names names of players
+	 */
 	public Game(String...names) {
 		// TODO Auto-generated constructor stub
 		Player[] players = new Player[names.length];
@@ -31,12 +41,19 @@ public class Game implements TableStateChangeListener, PlayerStateChangeListener
 		init(players);
 	}
 	
+	/**
+	 * initiates tasks that are not allowed 
+	 * to be declared in default constructor
+	 * @param players players objects as an array
+	 */
 	public void init(Player...players) {
-//		for(Player p: players) {
-//			System.out.println(p.getStatus());
-//		}
+
 	}
 	
+	/**
+	 * main game loop
+	 * @throws CardNotFoundException if matching card is not found with the player
+	 */
 	public void start() throws CardNotFoundException {
 		Scanner sc;
 		int moves = 0;
@@ -71,10 +88,18 @@ public class Game implements TableStateChangeListener, PlayerStateChangeListener
 		}
 	}
 	
+	/**
+	 * returns deck of the current game
+	 * @return deck
+	 */
 	public Deck getDeck() {
 		return deck;
 	}
 	
+	/**
+	 * returns table of the current game
+	 * @return table
+	 */
 	public Table getTable() {
 		return table;
 	}
