@@ -16,6 +16,11 @@ public class Player {
 	private ArrayList<Card> cards;
 	private PlayerStateChangeListener l;
 	
+	/**
+	 * creates new player with 
+	 * @param name player name
+	 * @param l keeps updated with current player state {@link PlayerStateChangeListener}
+	 */
 	public Player(String name, PlayerStateChangeListener l) {
 		this.name = name;
 		this.l = l;
@@ -23,6 +28,10 @@ public class Player {
 		init();
 	}
 	
+	/**
+	 * initialization tasks not allowed in default 
+	 * constructor
+	 */
 	public void init() {
 		cards = new ArrayList<Card>();
 	}
@@ -61,6 +70,11 @@ public class Player {
 		}
 	}
 	
+	/**
+	 * plays given card 
+	 * @param c {@link Card} should belong to current player
+	 * @return {@link Card} that was added to table, null if move not played
+	 */
 	public Card playCard(Card c) {
 		int index;
 		try {
@@ -76,6 +90,14 @@ public class Player {
 		return ct;
 	}
 	
+	/**
+	 * get index for current card
+	 * index is the position of the card
+	 * in player's hand
+	 * @param c card to check index for
+	 * @return index as integer
+	 * @throws CardNotFoundException if given card is not with the player
+	 */
 	public int getIndexCard(Card c) throws CardNotFoundException {
 		int i = 0;
 		for(Card crd:cards) {
@@ -97,11 +119,20 @@ public class Player {
 		return true;
 	}
 	
+	/**
+	 * checks if the player has this card
+	 * @param c card to check 
+	 * @return true if has, false otherwise
+	 */
 	public boolean hasCard(Card c) {
 		for(Card c1 : this.cards) if(c.equals(c1)) return true;
 		return false;
 	}
 	
+	/**
+	 * returns user cards
+	 * @return
+	 */
 	public ArrayList<Card> getCards() {
 		return cards;
 	}
