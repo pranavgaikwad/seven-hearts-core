@@ -177,10 +177,10 @@ public class Game implements TableStateChangeListener, PlayerStateChangeListener
 	}
 
 	@Override
-	public void onOnePlayerRemaining(Player p) {
+	public void onPlayerWon(Player p) {
 		// TODO Auto-generated method stub
-		this.isFinished = true;
-		FileHelper.getInstance().appendStringToGameFile("\n======> " + p.getName() + " lost !!!");
+		isFinished = true;
+		FileHelper.getInstance().appendStringToGameFile("Player won : " + p.getName());
 	}
 
 }

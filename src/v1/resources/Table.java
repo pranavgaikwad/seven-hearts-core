@@ -22,6 +22,11 @@ public class Table {
 	private static Table instance = null;
 	private TableStateChangeListener l;
 	
+	// following boolean value checks if any of the player has won or not
+	// true if current player is first player to get removed from the table
+	// a player is removed from the table as soon as he/she is out of cards.
+	private boolean isFirstPlayerToFinish = true;
+	
 	/**
 	 * default constructor with player names
 	 * @param l used to keep updated with current state of the table
@@ -93,8 +98,6 @@ public class Table {
 	 * from {@link Deck}
 	 */
 	public void checkTableFull() {
-		if(this.players.size() == 1) 
-			l.onOnePlayerRemaining(players.get(0));
 		if(isTableFull())
 			l.onTableFull(this);
 	}
@@ -219,6 +222,10 @@ public class Table {
 	 * @param p {@link Player} to remove
 	 */
 	public void removePlayerFromTable(Player p) {
+		if(isFirstPlayerToFinish) {
+			isFirstPlayerToFinish = false;
+			l.onPlayerWon(p);
+		}
 		try {
 			players.remove(getPlayerIndex(p));
 			l.onPlayerRemovedFromTable(this, p);

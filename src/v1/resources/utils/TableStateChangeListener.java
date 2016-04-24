@@ -12,5 +12,5 @@ public interface TableStateChangeListener {
 	public void onPlayerRemovedFromTable(Table t, Player p);
 	public void onSuitsRefreshed(Table t);
 	public void onTableFull(Table t);
-	public void onOnePlayerRemaining(Player p);
+	public void onPlayerWon(Player p);
 }
