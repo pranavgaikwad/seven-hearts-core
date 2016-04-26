@@ -13,6 +13,10 @@ public class Player {
 	private String id; 
 	private String name;
 	
+	// keeps the sum of ranks of 
+	// all possessed cards 
+	private int score;
+	
 	private ArrayList<Card> cards;
 	private PlayerStateChangeListener l;
 	
@@ -44,6 +48,10 @@ public class Player {
 		return id;
 	}
 	
+	public int getScore() {
+		return score;
+	}
+	
 	/**
 	 * give card to the player
 	 * giving card changes the state of the player. 
@@ -53,6 +61,7 @@ public class Player {
 	public void giveCard(Card c) {
 		cards.add(c);
 		if(areCardsExhausted()) l.onPlayerCardsExhausted(this);
+		updateScore();
 	}
 	
 	/**
@@ -87,7 +96,17 @@ public class Player {
 		cards.remove(index);
 		if (areCardsExhausted())
 			l.onPlayerCardsExhausted(this);
+		updateScore();
 		return ct;
+	}
+	
+	/**
+	 * updates score for given player
+	 */
+	private void updateScore() {
+		score = 0;
+		for(Card c : cards) 
+			score = score + c.getRank() + 1; // 2 
 	}
 	
 	/**

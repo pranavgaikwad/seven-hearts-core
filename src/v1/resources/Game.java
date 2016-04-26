@@ -86,6 +86,10 @@ public class Game implements TableStateChangeListener, PlayerStateChangeListener
 			}
 			table.incrementCurrentPlayerIndex();
 		}
+		ArrayList<Player> players = table.getPlayers();
+		for(Player p : players) {
+			System.out.println(p.getName()  + " : " + String.valueOf(p.getScore()));
+		}
 	}
 	
 	/**
@@ -165,12 +169,6 @@ public class Game implements TableStateChangeListener, PlayerStateChangeListener
 	}
 
 	@Override
-	public void onPlayerCardsExhausted(Player p) {
-		// TODO Auto-generated method stub
-		table.removePlayerFromTable(p);
-	}
-
-	@Override
 	public void onPlayerCardsExhausted(Player p, String status) {
 		// TODO Auto-generated method stub
 		
@@ -182,5 +180,10 @@ public class Game implements TableStateChangeListener, PlayerStateChangeListener
 		isFinished = true;
 		FileHelper.getInstance().appendStringToGameFile("Player won : " + p.getName());
 	}
-
+	
+	@Override
+	public void onPlayerCardsExhausted(Player p) {
+		// TODO Auto-generated method stub
+		table.removePlayerFromTable(p);
+	}
 }

@@ -1,8 +1,8 @@
 package v1.resources.constants;
 
 public class Constants {
-	public static final String[] CARDS = { "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
-			"Jack", "Queen", "King", "Ace" };
+	public static final String[] CARDS = { "Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
+			"Jack", "Queen", "King" };
 	public static final String[] SUITS = { "Hearts", "Spades", "Clubs", "Diamonds" };
 
 	public static final int STATUS_INT_NOT_FOUND = -1;
