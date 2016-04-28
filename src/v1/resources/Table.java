@@ -64,7 +64,7 @@ public class Table {
 	 * used to contain cards thrown on 
 	 * the table {@link Suit}
 	 */
-	public void createLocalSuits() {
+	private void createLocalSuits() {
 		localSuits.add(new Suit(Suits.CLUBS));
 		localSuits.add(new Suit(Suits.DIAMONDS));
 		localSuits.add(new Suit(Suits.HEARTS));
@@ -87,7 +87,7 @@ public class Table {
 	 * according to current status of
 	 * the game
 	 */
-	public void updateTableStatus() {
+	private void updateTableStatus() {
 		updateSuits();
 		updateOpenCards();
 		checkTableFull();
@@ -97,7 +97,7 @@ public class Table {
 	 * checks if the table has all the cards 
 	 * from {@link Deck}
 	 */
-	public void checkTableFull() {
+	private void checkTableFull() {
 		if(isTableFull())
 			l.onTableFull(this);
 	}
@@ -139,7 +139,7 @@ public class Table {
 	 * provokes the re-arrangement of the new 
 	 * cards according to suits
 	 */
-	public void updateSuits() {
+	private void updateSuits() {
 		for(Card c : cards) 
 			for(Suit s : localSuits) {
 				if(c.getSuit() == s.getSuit()) s.addNewCard(c);
@@ -150,7 +150,7 @@ public class Table {
 	/**
 	 * updates the current available moves
 	 */
-	public void updateOpenCards() {
+	private void updateOpenCards() {
 		Table.openCards = new ArrayList<Card>();
 		if (isEmpty())
 			Table.openCards.add(new Card(Cards.SEVEN, Suits.HEARTS));

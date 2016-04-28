@@ -8,6 +8,7 @@ import v1.resources.constants.Suits;
 import v1.resources.utils.PlayerStateChangeListener;
 import v1.resources.utils.TableStateChangeListener;
 import v1.resources.utils.exceptions.CardNotFoundException;
+import v1.solution.Solver;
 import v1.utils.FileHelper;
 
 public class Game implements TableStateChangeListener, PlayerStateChangeListener{
@@ -68,12 +69,17 @@ public class Game implements TableStateChangeListener, PlayerStateChangeListener
 					+ p.getStatus() + "\n\n" + "Count : " + String.valueOf(p.getCards().size()) + "\n\n" +"Open moves for current player : " 
 					+ table.getAvailableMovesFor(p).toString() + "\n\n" + table.getCardsStatus();
 			FileHelper.getInstance().appendStringToGameFile(info);
+			
+			/**
+			 * checks if the player has any cards available 
+			 * if no cards are available, player passes the move
+			 */
 			if(table.getAvailableMovesFor(p).isEmpty()) {
 				table.incrementCurrentPlayerIndex();
 				continue;
 			}
 			else {
-				c = table.getAvailableMovesFor(p).get(0);
+				c = table.getAvailableMovesFor(p).get(Solver.getIndexOfNextMove(table.getAvailableMovesFor(p)));
 			}
 			if(c == null) {
 				System.out.println("null card");

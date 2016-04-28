@@ -7,11 +7,11 @@ import java.security.NoSuchAlgorithmException;
 import v1.resources.constants.Constants;
 
 public class Card {
-	String id;		// used to match cards 
-	int rank;
-	int suit;
-	String rankName;
-	String suitName;
+	private String id;		// used to match cards 
+	private int rank;
+	private int suit;
+	private String rankName;
+	private String suitName;
 	
 	/**
 	 * initialize card with rank and suit as integers
@@ -58,7 +58,7 @@ public class Card {
 	 * @param s string
 	 * @return
 	 */
-	public byte[] getMD5(String s) {
+	private byte[] getMD5(String s) {
 		byte[] str = s.getBytes();
 		try {
 			MessageDigest d = MessageDigest.getInstance("MD5");

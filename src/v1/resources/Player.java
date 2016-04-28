@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import v1.resources.constants.Constants;
 import v1.resources.utils.PlayerStateChangeListener;
 import v1.resources.utils.exceptions.CardNotFoundException;
+import v1.resources.constants.Suits;
 
 public class Player {
 	private String id; 
@@ -130,7 +131,7 @@ public class Player {
 	 * checks if the player is out of cards
 	 * @return true if player is out of cards, false otherwise
 	 */
-	public boolean areCardsExhausted() {
+	private boolean areCardsExhausted() {
 		if(cards.isEmpty()) return true;
 		for(Card c : cards) {
 			if(c != null) return false;
@@ -154,6 +155,18 @@ public class Player {
 	 */
 	public ArrayList<Card> getCards() {
 		return cards;
+	}
+	
+	/**
+	 * returns the extremity index for current suit 
+	 * extremity index is the value of high value cards
+	 * that player currently has. these cards are to be 
+	 * played before other cards.
+	 * @param s  suit {@link Suits}
+	 * @return extremity value for given suit
+	 */
+	private static int getExtremityEndForSuit(int s) {
+		return 0;
 	}
 	
 	

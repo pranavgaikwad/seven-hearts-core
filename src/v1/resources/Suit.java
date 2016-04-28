@@ -127,7 +127,7 @@ public class Suit {
 	/**
 	 * updates the list of next possible moves
 	 */
-	public void updateAvailableCards() {
+	private void updateAvailableCards() {
 		availableCards = new ArrayList<Card>();
 		Card h = getCardForRank(getHighestCardRank());
 		Card l = getCardForRank(getLowestCardRank());
